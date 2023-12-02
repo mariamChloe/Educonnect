@@ -72,7 +72,8 @@ class _NotePageListState extends State<NotePageList> {
       } else if (response.statusCode == 404) {
         print('Erreur: Ressource non trouvée. Status 404');
       } else {
-        print('Erreur lors de la récupération des élèves. Statut ${response.statusCode}');
+        print(
+            'Erreur lors de la récupération des élèves. Statut ${response.statusCode}');
         print('Response body: ${response.body}');
       }
     } catch (error) {
@@ -80,67 +81,128 @@ class _NotePageListState extends State<NotePageList> {
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-           backgroundColor: Color.fromRGBO(236, 237, 255, 1),
-
-      appBar: AppBar(
-        title: Text('Note Page - Terminale A'),
-
-        actions: [
-            SizedBox(width: 10),
-          ElevatedButton(
-            onPressed: () {
-              for (int i = 0; i < eleves.length; i++) {
-                print('Note for ${eleves[i].prenom} ${eleves[i].nom}: ${notes[i]}');
-              }
-            },
-            child: Text('Save All Notes'),
-
-            
-          ),
-        ],
-
-        
-      ),
-      body: ListView.builder(
-  itemCount: eleves.length,
-  itemBuilder: (context, index) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: AssetImage('assets/mariamTraore.png'), // Replace with your avatar image
-      ),
-      title: Text('${eleves[index].prenom} ${eleves[index].nom}'),
-      subtitle: Row(
+      backgroundColor: Color.fromRGBO(236, 237, 255, 1),
+      body: Column(
         children: [
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(Icons.supervised_user_circle_outlined,
+                      size: 35, color: Color.fromRGBO(236, 237, 255, 1)),
+                ),
+                Text("Tle D1",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(46, 49, 146, 1))),
+                Container(
+                    padding: EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(217, 14, 27, 1),
+                        borderRadius: BorderRadius.circular(20.0)),
+                    child: Text(
+                      "Salle A3",
+                      style: TextStyle(color: Colors.white),
+                    )),
+                Container(
+                  alignment: Alignment.center,
+                  height: 60,
+                  padding: EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(67, 180, 253, 1),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10))),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Interrogations",
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+            width: width,
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
           Expanded(
-            child: TextField(
-              decoration: InputDecoration(labelText: 'Note'),
-              onChanged: (note) {
-                setState(() {
-                  notes[index] = note;
-                  eleves[index].note = note;
-                });
+            child: ListView.builder(
+              itemCount: eleves.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: AssetImage('assets/mariamTraore.png'),
+                  ),
+                  title: Text('${eleves[index].prenom} ${eleves[index].nom}'),
+                  subtitle: Row(
+                    children: [
+                      /*Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Note'),
+                          onChanged: (note) {
+                            setState(() {
+                              notes[index] = note;
+                              eleves[index].note = note;
+                            });
+                          },
+                        ),
+                      ),*/
+                      IconButton(
+                        icon: Icon(Icons.check, color: Colors.green),
+                        onPressed: () {
+                          print(
+                              'Note de ${eleves[index].prenom} ${eleves[index].nom}: ${notes[index]} enregistrée');
+                        },
+                      ),
+                      Expanded(
+                        child: TextField(
+                          keyboardType: TextInputType
+                              .number, // Permet seulement les chiffres
+                          decoration: InputDecoration(
+                            hintText: "/10", // Texte indicatif
+                            hintStyle: TextStyle(
+                              //fontSize: 16 * ffem,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          style: TextStyle(
+                            //fontSize: 16 * ffem,
+                            color: Color(0xff4a9c0c),
+                          ),
+                          onChanged: (note) {
+                            setState(() {
+                              notes[index] = note;
+                              eleves[index].note = note;
+                            });
+                            // Utilisez la valeur entrée (value) comme bon vous semble
+                            // Peut-être mettez à jour l'état de votre application
+                            // ou effectuez d'autres actions en réponse à l'entrée utilisateur.
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              print('Note for ${eleves[index].prenom} ${eleves[index].nom}: ${notes[index]}');
-            },
-            child: Text('Save Note'),
-          ),
         ],
       ),
-    );
-  },
-),
     );
   }
 }

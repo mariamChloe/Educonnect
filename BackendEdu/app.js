@@ -4,6 +4,7 @@ const Enseignants = require('./models/enseignants');
 const eleve = require('./models/élèves');
 const listeClasse = require('./models/listeClasse');
 const note = require('./models/note');
+//onst { noterEleve } = require('./controller/note'); 
 
 //const {noteController} = require('./controller/noteController');
 //const { marquerAssiduite, enregistrerNotes } = require('./controller/elevesController');
@@ -12,6 +13,7 @@ const note = require('./models/note');
 const cors = require('cors');
 
 const app = express();
+exports.app = app;
 const port = process.env.PORT || 3000;
 
 // Configurations et middlewares...
@@ -77,10 +79,6 @@ app.get('/listeClasses', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
-
-
 // ...
 
 app.get('/listeClasse/:nomClasse', async (req, res) => {
@@ -107,6 +105,7 @@ app.get('/listeClasse/:nomClasse', async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 });
+//app.post('/noter-eleve', noterEleve);
 
 //app.post('/noterEleve', notesController.noterEleve);
 

@@ -1,6 +1,7 @@
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/educonnect
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/icudtl.dat
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
+/home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/version.json
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/assets/splash.png
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/assets/Groupe%2017558.png
@@ -51,5 +52,6 @@
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/kernel_blob.bin
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+/home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.bin.json
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
 /home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES.Z
