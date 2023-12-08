@@ -1,18 +1,25 @@
-import 'package:educonnect/design/my_theme.dart';
+import 'package:Educonnect/design/my_theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 class OnboardingPage extends StatelessWidget {
   final Color color;
-  final String image;
+  final String svgImage;
+  
+  final String Image;
   final String title;
   final String subtitle;
+
 
   
 
   OnboardingPage({
     required this.color,
-    required this.image,
+    required this.svgImage,
+    
+    required this.Image,
     required this.title,
     required this.subtitle,
   });
@@ -26,15 +33,18 @@ class OnboardingPage extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: horizontalSpacing,
         right: horizontalSpacing,
+        top: 70,
       ),
       color: color,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(image,
-           height: 300, // ou null
-           width: 300,   ),
+         SvgPicture.asset(
+            svgImage,
+           height: 400, // ou null
+           width: 300,  
+            ),
           //const SizedBox(height: verticalSpacing),
           Center(
             child: Text(

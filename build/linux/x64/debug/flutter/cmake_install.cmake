@@ -1,8 +1,8 @@
-# Install script for directory: /home/digifemmes-22lab004/EduConnect_app/linux/flutter
+# Install script for directory: /home/digifemmes-22lab004/Téléchargements/EduConnectVRAI/EduConnect_app-main/linux/flutter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug/bundle")
+  set(CMAKE_INSTALL_PREFIX "/home/digifemmes-22lab004/Téléchargements/EduConnectVRAI/EduConnect_app-main/build/linux/x64/debug/bundle")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

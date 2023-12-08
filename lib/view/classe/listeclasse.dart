@@ -13,7 +13,7 @@ class _ListeClasseScreenState extends State<ListeClasseScreen> {
   @override
   void initState() {
     super.initState();
-    fetchEleves('eleve'); // Corrected parameter name
+    fetchEleves('nom',"prenom"); // Corrected parameter name
   }
 
 /*Future<void> fetchEleves(String nomClasse) async {
@@ -47,54 +47,44 @@ class _ListeClasseScreenState extends State<ListeClasseScreen> {
   } catch (error) {
     print('Erreur lors de la récupération des élèves: $error');
   }
+  String nom, String prenom
 }*/
-  Future<void> fetchEleves(String nomClasse) async {
-    try {
-      final classeUri = 'http://localhost:3000/listeClasses';
-      print('Fetching data from: $classeUri');
-      final response = await http.get(Uri.parse(classeUri));
+ Future<void> fetchEleves( String nom, String prenom) async {
+  try {
+    final classeUri = 'http://localhost:3000/listeClasse';
+    print('Fetching data from: $classeUri');
+    final response = await http.get(Uri.parse(classeUri));
 
-      if (response.statusCode == 200) {
-        final List<dynamic> fetchedData = json.decode(response.body);
-        print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> fetchedData = json.decode(response.body);
+      print('Response body: ${response.body}');
 
-        // Assurez-vous que fetchedData est une liste non vide avant de l'utiliser
-        if (fetchedData.isNotEmpty) {
-          // Utilisez map pour extraire uniquement les noms et prénoms
-          final List<Map<String, dynamic>> elevesFromDB =
-              fetchedData.map((element) {
-            return {
-              'nom': element['nom'],
-              'prenom': element['prenom'],
-            };
-          }).toList();
+      if (fetchedData.isNotEmpty) {
+        final List<Map<String, dynamic>> elevesFromDB = fetchedData['eleves'].map<Map<String, dynamic>>((element) {
+          return {
+            'nom': element['nom'],
+            'prenom': element['prenom'],
+          };
+        }).toList();
 
-          // Mettez à jour l'état avec les données de la base de données
-          setState(() {
-            eleves = elevesFromDB;
-          });
-        } else {
-          // Ajoutez des données fictives si le tableau est vide
-          setState(() {
-            eleves = List.generate(2, (index) {
-              return {
-                'nom': 'Traore$index',
-                'prenom': 'Mariam$index',
-              };
-            });
-          });
-        }
-      } else if (response.statusCode == 404) {
-        print('Erreur: Ressource non trouvée. Status 404');
+        setState(() {
+          eleves = elevesFromDB;
+        });
       } else {
-        print(
-            'Erreur lors de la récupération des élèves. Statut ${response.statusCode}');
-        print('Response body: ${response.body}');
+        print('No student found in the response data.');
       }
-    } catch (error) {
-      print('Erreur lors de la récupération des élèves: $error');
+    } else if (response.statusCode == 404) {
+      print('Erreur: Ressource non trouvée. Status 404');
+    } else {
+      print('Erreur lors de la récupération des élèves. Statut ${response.statusCode}');
+      print('Response body: ${response.body}');
     }
+  } catch (error) {
+    print('Erreur lors de la récupération des élèves: $error');
   }
+}
+
+
 
   @override
   Widget build(BuildContext context) {

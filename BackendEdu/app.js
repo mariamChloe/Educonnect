@@ -4,10 +4,17 @@ const Enseignants = require('./models/enseignants');
 const eleve = require('./models/élèves');
 const listeClasse = require('./models/listeClasse');
 const note = require('./models/note');
+const { MongoClient } = require('mongodb');
+const router = express.Router(); // Créez une instance de routeur express
+
+//const listeClasseController = require('./controller/listeClasseController'); // Assurez-vous d'ajuster le chemin
+
+
 //onst { noterEleve } = require('./controller/note'); 
 
 //const {noteController} = require('./controller/noteController');
 //const { marquerAssiduite, enregistrerNotes } = require('./controller/elevesController');
+//app.use(bodyParser.json());
 
 
 const cors = require('cors');
@@ -70,7 +77,7 @@ app.post('/authenticate', async (req, res) => {
 
 
 // Route pour afficher la liste des classes
-app.get('/listeClasses', async (req, res) => {
+/*app.get('/listeClasse', async (req, res) => {
   try {
     const classes = await listeClasse.find(); // Utilisez une variable différente ici
     res.json(classes);
@@ -79,7 +86,8 @@ app.get('/listeClasses', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-// ...
+
+
 
 app.get('/listeClasse/:nomClasse', async (req, res) => {
   try {
@@ -103,6 +111,102 @@ app.get('/listeClasse/:nomClasse', async (req, res) => {
   } catch (error) {
     console.error('Erreur lors de la récupération de la liste de classe :', error);
     res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+*/
+app.get('/listeClasse', async (req, res) => {
+  try {
+    const nom = req.query.nom;
+    const prenom = req.query.prenom;
+
+    // Recherchez une liste existante par nom et prénom
+    const existingList = await listeClasse.findOne({
+      "eleves.nom": nom,
+      "eleves.prenom": prenom
+    });
+
+    if (existingList) {
+      // Si la liste existe, retournez-la
+      res.json(existingList);
+    } else {
+      // Si la liste n'existe pas, créez une liste aléatoire et enregistrez-la dans la base de données
+      const randomList = generateRandomList();
+      const newList = new listeClasse({
+        nomClasse: 'TerminaleA',
+        eleves: randomList,
+      });
+
+      await newList.save();
+
+      res.json(newList);
+    }
+  } catch (error) {
+    console.error('Erreur lors de la récupération des classes :', error);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+
+// Fonction pour générer une liste aléatoire
+function generateRandomList() {
+  return Array.from({ length: 10 }, (_, index) => ({
+    nom: `Nom${index}`,
+    prenom: `Prenom${index}`,
+    matricule: `Matricule${index}`,
+    sexe: 'M', // ou 'F', selon vos besoins
+    present: false, // ou true, selon vos besoins
+  }));
+}
+
+app.use(router);
+
+
+app.post('/marquerPresence', async (req, res) => {
+  try {
+    const { nomEleve } = req.body;
+    console.log(`Requête pour marquer la présence de ${nomEleve} reçue.`);
+
+
+    //const uri = 'mongodb://localhost:27017/EduconnectDB';
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await client.connect();
+
+    const database = client.db('EduconnectDB');
+    const elevesCollection = database.collection('eleves');
+
+    // Insérer les données dans la base de données
+    await elevesCollection.updateOne({ nom: nomEleve }, { $set: { assiduite: 'present' } });
+
+    res.status(200).send('Présence marquée avec succès.');
+  } catch (error) {
+    console.error('Erreur lors de la marque de présence :', error);
+    res.status(500).send('Erreur serveur.');
+  }
+});
+
+// Point de terminaison pour marquer l'absence d'un élève
+app.post('/marquerAbsence', async (req, res) => {
+  try {
+    const { nomEleve } = req.body;
+    console.log(`Requête pour marquer la présence de ${nomEleve} reçue.`);
+
+
+    //const uri = 'mongodb://localhost:27017/EduconnectDB';
+   // const uri = '';
+
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await client.connect();
+
+    const database = client.db('EduconnectDB');
+    const elevesCollection = database.collection('eleves');
+
+    // Insérer les données dans la base de données
+    await elevesCollection.updateOne({ nom: nomEleve }, { $set: { assiduite: 'absent' } });
+
+    res.status(200).send('Absence marquée avec succès.');
+  } catch (error) {
+    console.error('Erreur lors de la marque d\'absence :', error);
+    res.status(500).send('Erreur serveur.');
   }
 });
 //app.post('/noter-eleve', noterEleve);

@@ -50,13 +50,14 @@ module.exports = router;
 */
 const express = require('express');
 const router = express.Router();
-const ListeClasse = require('../models/listeClasse');
+const ListeClasse = require('./models/listeClasse');
+
 
 // Endpoint pour récupérer la liste des classes par nom et prénom
-router.get('/listeClasses/:nom/:prenom', async (req, res) => {
+router.get('/listeClasse/:nom/:prenom', async (req, res) => {
   try {
-    const nom = req.params.nom;
-    const prenom = req.params.prenom;
+    const nom = req.query.nom;  // Utilisez req.query au lieu de req.params
+    const prenom = req.query.prenom;
 
     // Utilisez findOne pour trouver une classe spécifique par nom et prénom de l'élève
     const listeClasse = await ListeClasse.findOne({ "eleves.nom": nom, "eleves.prenom": prenom });
@@ -73,7 +74,7 @@ router.get('/listeClasses/:nom/:prenom', async (req, res) => {
 });
 
 // Endpoint pour marquer la présence d'un élève
-router.put('/listeClasses/marquerPresence/:matricule', async (req, res) => {
+router.put('/listeClasse/marquerPresence/:matricule', async (req, res) => {
   try {
     const matricule = req.params.matricule;
 

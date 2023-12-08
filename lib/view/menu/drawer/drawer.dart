@@ -1,10 +1,9 @@
-import 'package:educonnect/design/my_theme.dart';
-import 'package:educonnect/view/home/notes.dart';
-import 'package:flutter/material.dart';/*
+import 'package:Educonnect/design/my_theme.dart';
+import 'package:Educonnect/view/home/notes.dart';
+import 'package:flutter/material.dart'; /*
 import 'package:flutter_drawer_example/privacy_policy.dart';
 import 'package:flutter_drawer_example/send_feedback.dart';
 import 'package:flutter_drawer_example/settings.dart';*/
-
 
 import '../../home/classes.dart';
 import '../../home/presence.dart';
@@ -21,25 +20,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var container;
-   /* if (currentPage == DrawerSections.dashboard) {
+    /* if (currentPage == DrawerSections.dashboard) {
       container = MyHomePage();
-    } else */if (currentPage == DrawerSections.classe ) {
+    } else */
+    if (currentPage == DrawerSections.classe) {
       container = ClasseScreen();
-    } else if (currentPage == DrawerSections.notes ) {
-      container =  NoteScreen();
-    } else if (currentPage == DrawerSections.Statistique ) {
-      container = StatistiqueScreen();
-    } else if (currentPage == DrawerSections.notifications ) {
-      container =  PresencePage();
-    } else if (currentPage == DrawerSections.settings ) {
-      container =  PresencePage();
-    } else if (currentPage == DrawerSections.privacy_policy ) {
-      container =  PresencePage();
-    } else if (currentPage == DrawerSections.send_feedback ) {
-      container =  PresencePage();
+    } else if (currentPage == DrawerSections.notes) {
+      container = NoteScreen();
+    } else if (currentPage == DrawerSections.Statistique) {
+      container = PresenceScreen();
+    } else if (currentPage == DrawerSections.notifications) {
+      container = PresencePage();
+    } else if (currentPage == DrawerSections.settings) {
+      container = PresencePage();
+    } else if (currentPage == DrawerSections.privacy_policy) {
+      container = PresencePage();
+    } else if (currentPage == DrawerSections.send_feedback) {
+      container = PresencePage();
     }
     return Scaffold(
-      
       body: container,
       drawer: Drawer(
         child: SingleChildScrollView(
@@ -64,7 +63,6 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         // shows the list of menu drawer
         children: [
-          
           menuItem(1, "Acceuil", Icons.dashboard_outlined,
               currentPage == DrawerSections.dashboard ? true : false),
           menuItem(2, "Classe", Icons.people_alt_outlined,
@@ -95,7 +93,6 @@ class _HomePageState extends State<HomePage> {
         onTap: () {
           Navigator.pop(context);
           setState(() {
-            
             if (id == 1) {
               currentPage = DrawerSections.classe;
             } else if (id == 2) {
@@ -144,8 +141,6 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-
-
 class MyHeaderDrawer extends StatefulWidget {
   @override
   _MyHeaderDrawerState createState() => _MyHeaderDrawerState();
@@ -188,7 +183,6 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
     );
   }
 }
-
 
 enum DrawerSections {
   dashboard,

@@ -42,7 +42,7 @@ rule CXX_EXECUTABLE_LINKER__educonnect
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /snap/flutter/141/usr/bin/cmake -S/home/digifemmes-22lab004/EduConnect_app/linux -B/home/digifemmes-22lab004/EduConnect_app/build/linux/x64/debug
+  command = /snap/flutter/141/usr/bin/cmake -S/home/digifemmes-22lab004/Téléchargements/EduConnectVRAI/EduConnect_app-main/linux -B/home/digifemmes-22lab004/Téléchargements/EduConnectVRAI/EduConnect_app-main/build/linux/x64/debug
   description = Re-running CMake...
   generator = 1
 
